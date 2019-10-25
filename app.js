@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const express = require('express')
 const bodyParser = require('body-parser')
 const graphqlHttp = require('express-graphql')
@@ -5,7 +6,11 @@ const { buildSchema } = require('graphql')
 
 const app = express()
 
-const events = [];
+const Event = require('./models/event')
+
+mongoose.connect(`mongodb://localhost/${process.env.MONGO_DB}`)
+    .then(() => console.log(`Connected to MongoDB...`))
+    .catch(err => console.log('Could not connect to MongoDB...'));
 
 app.use(bodyParser.json())
 
@@ -40,19 +45,37 @@ app.use('/graphql',graphqlHttp({
     }
   `),
   rootValue: {
-    events: () => {
-      return events
+    events: async() => {
+      return await Event
+        .find()
+        .then(events => {
+          console.log(events)
+          return events.map(event => {
+            return {...event._doc}
+          })
+        })
+        .catch(err => {
+          console.log(err)
+          throw err;
+        });
     },
-    createEvent: ({ eventInput }) => {
-      const event = {
-        _id: Math.random().toString(),
+    createEvent: async ({ eventInput }) => {
+      const event = new Event({
         title: eventInput.title,
         description: eventInput.description,
         price: eventInput.price,
-        date: new Date().toISOString()
-      }
-      events.push(event)
-      return event
+        date: new Date(eventInput.date)
+      })
+      return await event
+        .save()
+        .then(result => {
+          console.log(result)
+          return {...result._doc}
+        })
+        .catch(err => {
+          console.log(err)
+          throw err;
+        });
     }
   },
   graphiql: true
