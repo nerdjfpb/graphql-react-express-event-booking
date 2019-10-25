@@ -1,0 +1,25 @@
+{
+  "name": "graphql-react-express-event-booking",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nerdjfpb/graphql-react-express-event-booking.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/nerdjfpb/graphql-react-express-event-booking/issues"
+  },
+  "homepage": "https://github.com/nerdjfpb/graphql-react-express-event-booking#readme",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1"
+  }
+}
