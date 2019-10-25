@@ -6,7 +6,7 @@ const app = express()
 app.use(bodyParser.json())
 
 app.get('/', (req, res, next) => {
-  res.send("hello bangladesh")
+  res.send("Hello graphql")
 })
 
 app.listen(3000)
