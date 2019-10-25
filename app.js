@@ -2,9 +2,9 @@ const mongoose = require('mongoose');
 const express = require('express')
 const bodyParser = require('body-parser')
 const graphqlHttp = require('express-graphql')
-
 const graphqlSchema = require('./graphql/schema/index')
 const rootResolver = require('./graphql/resolvers/index')
+const isAuth = require('./middleware/is-auth')
 
 const app = express()
 
@@ -13,6 +13,8 @@ mongoose.connect(`mongodb://localhost/${process.env.MONGO_DB}`)
     .catch(err => console.log('Could not connect to MongoDB...'));
 
 app.use(bodyParser.json())
+
+app.use(isAuth)
 
 app.use('/graphql',graphqlHttp({
   schema: graphqlSchema,

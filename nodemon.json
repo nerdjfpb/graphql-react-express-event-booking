@@ -1,5 +1,6 @@
 {
   "env": {
-    "MONGO_DB": "eventbooking"
+    "MONGO_DB": "eventbooking",
+    "AUTH_TOKEN": "somesupersecretkey"
   }
 }
