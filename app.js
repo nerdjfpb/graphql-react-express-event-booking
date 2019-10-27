@@ -14,6 +14,16 @@ mongoose.connect(`mongodb://localhost/${process.env.MONGO_DB}`)
 
 app.use(bodyParser.json())
 
+app.use((req, res, next) => {
+  res.setHeader('Access-control-Allow-Origin', '*')
+  res.setHeader('Access-Control-Allow-Methods', 'POST,GET,OPTIONS')
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization')
+  if (req.method === 'OPTIONS') {
+    return res.sendStatus(200)
+  }
+  next()
+})
+
 app.use(isAuth)
 
 app.use('/graphql',graphqlHttp({
